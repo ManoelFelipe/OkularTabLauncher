@@ -1,0 +1,47 @@
+name: Build
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and verify reproducibility
+    runs-on: windows-2025
+    timeout-minutes: 15
+
+    env:
+      DOTNET_CLI_TELEMETRY_OPTOUT: "1"
+      DOTNET_NOLOGO: "1"
+
+    steps:
+      - name: Check out the source
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Install the pinned .NET SDK
+        uses: actions/setup-dotnet@a98b56852c35b8e3190ac28c8c2271da59106c68 # v6.0.0
+        with:
+          dotnet-version: 10.0.400
+          cache: true
+          cache-dependency-path: src/packages.lock.json
+
+      - name: Build twice and compare SHA-256
+        shell: pwsh
+        run: ./scripts/build.ps1
+
+      - name: Upload the unsigned executable
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
+        with:
+          name: OkularTabLauncher-${{ github.sha }}
+          path: |
+            artifacts/OkularTabLauncher.exe
+            artifacts/OkularTabLauncher.exe.sha256
+          if-no-files-found: error
+          compression-level: 0
+          retention-days: 14

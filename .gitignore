@@ -1,0 +1,36 @@
+# Build output
+artifacts/
+bin/
+obj/
+**/bin/
+**/obj/
+
+# Visual Studio and user-local files
+.vs/
+*.suo
+*.user
+*.userosscache
+*.sln.docstates
+
+# Runtime logs and local configuration
+last-run.txt
+last-error.txt
+.env
+.env.*
+
+# Generated executables and symbols
+*.exe
+*.dll
+*.pdb
+*.zip
+
+# Temporary and backup files
+*.bak
+*.tmp
+*.new
+*~
+
+# OS metadata
+Thumbs.db
+Desktop.ini
+.DS_Store
