@@ -125,6 +125,8 @@ Open Windows **Settings > Apps > Default apps**, search for `.pdf`, and select t
 - Applications running at different integrity levels may be isolated by Windows UIPI.
 - An unsigned build can still be blocked by Smart App Control.
 
+Some Okular for Windows installations may unexpectedly activate tabs or menu entries while the pointer moves. The same behavior was reproduced through Okular's manual **File > Open** workflow, with no launcher process involved. See [Known issues](docs/KNOWN_ISSUES.md) for the test evidence and reporting guidance.
+
 ## Contributing and security
 
 See [CONTRIBUTING.md](CONTRIBUTING.md) before opening a pull request. Report vulnerabilities according to [SECURITY.md](SECURITY.md). Release signing rules are documented in [SIGNING_POLICY.md](SIGNING_POLICY.md).

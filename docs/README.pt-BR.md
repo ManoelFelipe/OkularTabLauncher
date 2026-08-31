@@ -125,6 +125,8 @@ Abra **Configurações > Aplicativos > Aplicativos padrão**, procure por `.pdf`
 - Aplicativos em níveis de integridade diferentes podem ser isolados pelo UIPI do Windows.
 - Builds sem assinatura ainda podem ser bloqueados pelo Smart App Control.
 
+Algumas instalações do Okular para Windows podem ativar inesperadamente abas ou itens de menu durante o movimento do ponteiro. O mesmo comportamento foi reproduzido pelo fluxo manual **Ficheiro > Abrir** do Okular, sem nenhum processo do launcher envolvido. Consulte [Problemas conhecidos](KNOWN_ISSUES.md) para ver as evidências dos testes e as orientações para relatar o problema.
+
 ## Licença e marcas
 
 O código e o ícone original do OkularTabLauncher usam a [licença MIT](../LICENSE).
