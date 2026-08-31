@@ -21,3 +21,4 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 
 - Error logs are cleared only after the launcher observes a successful start or a closed Open dialog.
 - Mutex ownership is tracked before release.
+- Success is confirmed by the Open dialog closing, without relying on Qt controls exposing their value through `GetWindowText`.

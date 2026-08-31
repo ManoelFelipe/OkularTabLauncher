@@ -628,13 +628,6 @@ namespace OkularTabLauncher
                     SendMessage(fileNameControl, WmSetText, IntPtr.Zero, pdfPath);
                     Thread.Sleep(200);
 
-                    if (!string.Equals(GetTitle(fileNameControl), pdfPath, StringComparison.Ordinal))
-                    {
-                        return Fail(
-                            ExitAutomationFailed,
-                            "O diálogo Abrir não aceitou o caminho completo do PDF.");
-                    }
-
                     IntPtr openButton = GetDlgItem(dialog, IdOk);
                     if (openButton != IntPtr.Zero)
                     {
