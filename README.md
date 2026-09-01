@@ -4,12 +4,19 @@
 
 # OkularTabLauncher
 
-Open a PDF as a new tab in an existing Okular window on Windows.
+Small Windows utilities for opening PDFs in Okular tabs and restoring tab sessions.
 
 [Leia em Português do Brasil](docs/README.pt-BR.md)
 
 > [!IMPORTANT]
 > Current workflow artifacts are unsigned development builds. Publishing the source and building it on GitHub does not, by itself, make Windows Smart App Control trust the executable. Code signing is a separate, protected release step described in [SIGNING_POLICY.md](SIGNING_POLICY.md).
+
+## Applications
+
+- **OkularTabLauncher** opens a PDF as a new tab in the primary existing Okular window.
+- **OkularSessionLauncher** optionally monitors that window, saves its PDF tab list, and restores the session automatically after Okular is reopened. See the [session launcher guide](docs/SESSION_LAUNCHER.md).
+
+The applications are independent. Users who only need tab opening do not need to install the session monitor.
 
 ## Why this exists
 
@@ -40,14 +47,15 @@ The launcher does not parse PDF contents. Document security remains the responsi
 - Windows 11 x64;
 - Okular for Windows;
 - .NET Framework 4.8 at runtime;
+- .NET 10 Desktop Runtime x64 for the optional OkularSessionLauncher;
 - PowerShell 7 and the pinned .NET SDK only when building from source.
 
 When Okular is closed, its executable is resolved in this order:
 
 1. `OKULAR_TAB_LAUNCHER_OKULAR_EXE` environment variable;
-2. `D:\Scoop\apps\okular\current\bin\okular.exe`;
-3. the default per-user Scoop directory;
-4. common `%ProgramFiles%\Okular` locations.
+2. the Scoop roots configured through `SCOOP`, the default per-user directory, and `SCOOP_GLOBAL`;
+3. common `%ProgramFiles%\Okular` locations;
+4. directories in `PATH`.
 
 ## Build from source
 
@@ -62,6 +70,8 @@ The build script restores only locked dependencies, performs two builds with sep
 ```text
 artifacts/OkularTabLauncher.exe
 artifacts/OkularTabLauncher.exe.sha256
+artifacts/OkularSessionLauncher.exe
+artifacts/OkularSessionLauncher.exe.sha256
 ```
 
 Verify the result with:
@@ -72,6 +82,16 @@ Get-Content .\artifacts\OkularTabLauncher.exe.sha256
 ```
 
 The same script is used by GitHub Actions. The .NET SDK is pinned in `global.json`; the .NET Framework reference assemblies are pinned in `src/packages.lock.json`; third-party GitHub Actions are pinned to complete commit hashes.
+
+## Install automatic session restore
+
+After building and testing the unsigned artifact, install the optional per-user monitor with:
+
+```powershell
+pwsh -NoProfile -File .\scripts\Install-SessionMonitor.ps1
+```
+
+The installer preserves existing session data and creates a Startup shortcut. Configuration, command-line modes, local data, privacy considerations, and limitations are documented in the [OkularSessionLauncher guide](docs/SESSION_LAUNCHER.md).
 
 ## Test without changing file associations
 

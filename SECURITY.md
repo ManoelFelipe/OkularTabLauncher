@@ -30,4 +30,13 @@ OkularTabLauncher:
 - does not download or execute updates;
 - does not bypass Smart App Control or other Windows security controls.
 
+OkularSessionLauncher:
+
+- reads tab names and the active window title through Windows UI Automation;
+- stores local PDF paths under the current user's `%LOCALAPPDATA%` profile;
+- never stores PDF contents in its session file;
+- can close and reopen a newly detected Okular window when restoring a session;
+- refuses that automatic restart when the new window already contains multiple tabs;
+- does not require administrator privileges or bypass Windows security controls.
+
 A signed release establishes publisher and artifact integrity; it does not guarantee that a PDF is safe.

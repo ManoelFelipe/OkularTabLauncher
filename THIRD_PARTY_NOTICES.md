@@ -4,6 +4,10 @@
 
 The build uses `Microsoft.NETFramework.ReferenceAssemblies.net48` version 1.0.3 as a private build-time dependency. It is distributed by Microsoft through NuGet under its package license. It is not bundled as a runtime component in the released executable.
 
+## Microsoft.NET.ILLink.Tasks
+
+The single-file OkularSessionLauncher build uses `Microsoft.NET.ILLink.Tasks` version 10.0.11 as a locked build-time dependency supplied with the .NET SDK. It is not bundled as a separately distributed runtime component.
+
 ## Okular and KDE
 
 Okular is developed by the KDE community and is not included in this repository or its build artifacts. The project name refers to Okular only to describe interoperability. OkularTabLauncher is not affiliated with or endorsed by KDE.

@@ -29,19 +29,23 @@ jobs:
         with:
           dotnet-version: 10.0.400
           cache: true
-          cache-dependency-path: src/packages.lock.json
+          cache-dependency-path: |
+            src/packages.lock.json
+            src/OkularSessionLauncher/packages.lock.json
 
-      - name: Build twice and compare SHA-256
+      - name: Build both applications twice and compare SHA-256
         shell: pwsh
         run: ./scripts/build.ps1
 
-      - name: Upload the unsigned executable
+      - name: Upload the unsigned executables
         uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
-          name: OkularTabLauncher-${{ github.sha }}
+          name: Okular-Windows-Launchers-${{ github.sha }}
           path: |
             artifacts/OkularTabLauncher.exe
             artifacts/OkularTabLauncher.exe.sha256
+            artifacts/OkularSessionLauncher.exe
+            artifacts/OkularSessionLauncher.exe.sha256
           if-no-files-found: error
           compression-level: 0
           retention-days: 14

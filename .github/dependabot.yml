@@ -9,3 +9,8 @@ updates:
     directory: /src
     schedule:
       interval: weekly
+
+  - package-ecosystem: nuget
+    directory: /src/OkularSessionLauncher
+    schedule:
+      interval: weekly

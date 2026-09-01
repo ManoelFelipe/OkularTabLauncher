@@ -30,7 +30,6 @@ namespace OkularTabLauncher
 
         private const string MutexName = @"Local\OkularTabLauncherV2";
         private const string OkularOverrideVariable = "OKULAR_TAB_LAUNCHER_OKULAR_EXE";
-        private const string CurrentScoopOkular = @"D:\Scoop\apps\okular\current\bin\okular.exe";
 
         private static readonly string BaseDirectory = Path.Combine(
             Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData),
@@ -235,13 +234,41 @@ namespace OkularTabLauncher
 
             string userProfile = Environment.GetFolderPath(Environment.SpecialFolder.UserProfile);
             string programFiles = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFiles);
-            string[] candidates =
+            string programFilesX86 = Environment.GetFolderPath(Environment.SpecialFolder.ProgramFilesX86);
+            string scoop = Environment.GetEnvironmentVariable("SCOOP");
+            string scoopGlobal = Environment.GetEnvironmentVariable("SCOOP_GLOBAL");
+            List<string> candidates = new List<string>();
+
+            if (!string.IsNullOrWhiteSpace(scoop))
             {
-                CurrentScoopOkular,
+                candidates.Add(Path.Combine(scoop, "apps", "okular", "current", "bin", "okular.exe"));
+            }
+
+            candidates.AddRange(new[]
+            {
                 Path.Combine(userProfile, "scoop", "apps", "okular", "current", "bin", "okular.exe"),
                 Path.Combine(programFiles, "Okular", "bin", "okular.exe"),
-                Path.Combine(programFiles, "Okular", "okular.exe")
-            };
+                Path.Combine(programFiles, "Okular", "okular.exe"),
+                Path.Combine(programFilesX86, "Okular", "bin", "okular.exe"),
+                Path.Combine(programFilesX86, "Okular", "okular.exe")
+            });
+
+            if (!string.IsNullOrWhiteSpace(scoopGlobal))
+            {
+                candidates.Add(Path.Combine(scoopGlobal, "apps", "okular", "current", "bin", "okular.exe"));
+            }
+
+            string pathVariable = Environment.GetEnvironmentVariable("PATH");
+            if (!string.IsNullOrWhiteSpace(pathVariable))
+            {
+                foreach (string directory in pathVariable.Split(Path.PathSeparator))
+                {
+                    if (!string.IsNullOrWhiteSpace(directory))
+                    {
+                        candidates.Add(Path.Combine(directory.Trim(), "okular.exe"));
+                    }
+                }
+            }
 
             foreach (string candidate in candidates)
             {

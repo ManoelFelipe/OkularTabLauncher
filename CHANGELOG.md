@@ -16,6 +16,10 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 - Configurable Okular path with Scoop and Program Files fallbacks.
 - Public security and signing policies.
 - Original project icon licensed under MIT.
+- Optional OkularSessionLauncher with automatic tab-session monitoring and restoration.
+- Portable Okular executable discovery without machine-specific paths.
+- Per-user session-monitor installation script that preserves existing data.
+- Reproducible dual-application artifacts and checksums in the build workflow.
 
 ### Changed
 

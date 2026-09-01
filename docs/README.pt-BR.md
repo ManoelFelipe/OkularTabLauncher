@@ -4,12 +4,19 @@
 
 # OkularTabLauncher
 
-Abre um PDF como nova aba na janela existente do Okular no Windows.
+Pequenos utilitários para abrir PDFs em abas do Okular e restaurar sessões no Windows.
 
 [Read in English](../README.md)
 
 > [!IMPORTANT]
 > Os artefatos atuais do workflow são builds de desenvolvimento sem assinatura. Publicar o fonte e compilá-lo no GitHub não faz, por si só, o Smart App Control confiar no executável. A assinatura de código será uma etapa protegida e separada, descrita em [SIGNING_POLICY.md](../SIGNING_POLICY.md).
+
+## Aplicativos
+
+- **OkularTabLauncher** abre um PDF como nova aba na janela principal existente do Okular.
+- **OkularSessionLauncher** monitora opcionalmente essa janela, salva a lista de abas PDF e restaura a sessão automaticamente quando o Okular é reaberto. Consulte o [guia do Session Launcher](SESSION_LAUNCHER.md).
+
+Os aplicativos são independentes. Quem precisa somente da abertura em abas não precisa instalar o monitor de sessão.
 
 ## Por que este projeto existe
 
@@ -40,14 +47,15 @@ O launcher não interpreta o conteúdo do PDF. A segurança do documento continu
 - Windows 11 x64;
 - Okular para Windows;
 - .NET Framework 4.8 para executar;
+- .NET 10 Desktop Runtime x64 para o OkularSessionLauncher opcional;
 - PowerShell 7 e o SDK .NET fixado somente para compilar.
 
 Quando o Okular está fechado, o executável é procurado nesta ordem:
 
 1. variável de ambiente `OKULAR_TAB_LAUNCHER_OKULAR_EXE`;
-2. `D:\Scoop\apps\okular\current\bin\okular.exe`;
-3. diretório Scoop padrão do usuário;
-4. caminhos comuns em `%ProgramFiles%\Okular`.
+2. raízes do Scoop configuradas por `SCOOP`, diretório padrão do usuário e `SCOOP_GLOBAL`;
+3. caminhos comuns em `%ProgramFiles%\Okular`;
+4. diretórios presentes em `PATH`.
 
 ## Compilar
 
@@ -62,6 +70,8 @@ O script restaura somente dependências travadas, faz duas compilações com est
 ```text
 artifacts/OkularTabLauncher.exe
 artifacts/OkularTabLauncher.exe.sha256
+artifacts/OkularSessionLauncher.exe
+artifacts/OkularSessionLauncher.exe.sha256
 ```
 
 Para conferir:
@@ -72,6 +82,16 @@ Get-Content .\artifacts\OkularTabLauncher.exe.sha256
 ```
 
 O GitHub Actions usa o mesmo script. O SDK está fixado em `global.json`, as referências do .NET Framework estão travadas em `src/packages.lock.json` e as Actions estão fixadas por hash completo de commit.
+
+## Instalar a restauração automática de sessão
+
+Depois de compilar e testar o artefato sem assinatura, instale o monitor opcional para o usuário atual com:
+
+```powershell
+pwsh -NoProfile -File .\scripts\Install-SessionMonitor.ps1
+```
+
+O instalador preserva a sessão existente e cria um atalho na pasta Inicializar. Configuração, comandos, arquivos locais, privacidade e limitações estão documentados no [guia do OkularSessionLauncher](SESSION_LAUNCHER.md).
 
 ## Testar sem alterar associações
 

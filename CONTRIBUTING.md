@@ -4,7 +4,7 @@ Thank you for helping improve OkularTabLauncher.
 
 ## Before changing code
 
-- Keep the project limited to opening a PDF as a tab in an existing Okular window on Windows.
+- Keep the project limited to opening PDFs in Okular tabs and saving or restoring Okular tab sessions on Windows.
 - Do not replace the Win32 automation with `okular.exe --unique` without reproducible evidence that it creates a tab in the affected Windows environment.
 - Do not add code that disables or bypasses Smart App Control, changes the protected PDF `UserChoice` value, invokes a command shell, or downloads executable content.
 - Avoid new runtime dependencies unless the benefit and security impact are documented.
